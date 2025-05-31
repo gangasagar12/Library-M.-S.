@@ -21,3 +21,35 @@ if user_system.login(username, password):
         print("5. Return book")
         print("6. Show all books")
         print("7. Exit")
+        
+     #  get user choice
+        choice=input("enter choice)(1-7):")
+     #  perform operations based on user choice
+        if choice=="1":
+            book=input("enter the book name: ")
+            library.add_book(book)
+        elif choice=="2":
+            book=input("enter book tittle to remove: ")
+        library.remove_book(book)
+elif choice=="3":
+      book=input("enter book tittle to search: ")
+      library.search_book(book)
+                                            
+elif choice=="4":
+  book=input("enter book tittle to return: ")
+  library.borrow_book(book,username)
+    
+elif choice== "5":
+    book=input("enter book tittle to return: ")
+    library.return_book(book,username)
+
+elif choice=="6":
+    library.show_books()
+elif choice=="7":
+ print("thank you for using the our librayr management system: ")
+    
+    break
+else:
+     print("invilid choice !plese try again:")
+
+
