@@ -1,6 +1,28 @@
+#  library management
+#  class to manage liberary operations
+class library:
+    def __init__(self):
+        # list to store available books
+        self.books=[]
+        #  dictoinary to store borrowed books with name
+        self.borrowed_books={}
+        #  add a book to the library
+    def add_book(self,book):
+        self.books.append(book)
+        print(f"{book} added to the library.")
+
+        #  remove a book in the library
+    def remove_book(self,book):
+        if book in self.books:
+            self.books.remove(book)
+            print(f"{book} removed form the library.")
+        else:
+            
+        
+
+
 
 # === Main Program Starts Here ===
-
 # Create instances of Library and UserSystem
 library = Library()
 user_system = UserSystem()
