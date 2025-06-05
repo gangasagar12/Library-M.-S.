@@ -17,10 +17,26 @@ class library:
             self.books.remove(book)
             print(f"{book} removed form the library.")
         else:
-            
+            print(f"{book} is not found in the library: ")
+
+            #  search for a book in the library
+            def search_book(self,tittle):
+                if tittle in self.books:
+                    print(f"{tittle} is available in the librayry. ")
+                else:
+                        print(f"{tittle} is not available.")
+                        #  borrow a book the library
+                        def borrow_book(self,book,username):
+                            if book in self.books:
+                             self.books.remove(book)
+                             self.borrowed_book[book]=username
+                             print(f"{ book } borrowed by {username}")
+                            else:
+                                print(f"{book}  is not available for borriwing")
+
         
 
-
+-
 
 # === Main Program Starts Here ===
 # Create instances of Library and UserSystem
