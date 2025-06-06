@@ -1,57 +1,72 @@
-#  library management
-#  class to manage liberary operations
-class library:
+# Class to manage library operations
+class Library:
     def __init__(self):
-        # list to store available books
-        self.books=[]
-        #  dictoinary to store borrowed books with name
-        self.borrowed_books={}
-        #  add a book to the library
-    def add_book(self,book):
+        self.books = []  # List to store available books
+        self.borrowed_books = {}  # Dictionary to store borrowed books with username
+
+    def add_book(self, book):
         self.books.append(book)
         print(f"{book} added to the library.")
 
-        #  remove a book in the library
-    def remove_book(self,book):
+    def remove_book(self, book):
         if book in self.books:
             self.books.remove(book)
-            print(f"{book} removed form the library.")
+            print(f"{book} removed from the library.")
         else:
-            print(f"{book} is not found in the library: ")
+            print(f"{book} is not found in the library.")
 
-            #  search for a book in the library
-            def search_book(self,tittle):
-                if tittle in self.books:
-                    print(f"{tittle} is available in the librayry. ")
-                else:
-                        print(f"{tittle} is not available.")
-                        #  borrow a book the library
-                        def borrow_book(self,book,username):
-                            if book in self.books:
-                             self.books.remove(book)
-                             self.borrowed_book[book]=username
-                             print(f"{ book } borrowed by {username}")
-                            else:
-                                print(f"{book}  is not available for borriwing")
+    def search_book(self, title):
+        if title in self.books:
+            print(f"{title} is available in the library.")
+        else:
+            print(f"{title} is not available.")
 
-        
+    def borrow_book(self, book, username):
+        if book in self.books:
+            self.books.remove(book)
+            self.borrowed_books[book] = username
+            print(f"{book} borrowed by {username}")
+        else:
+            print(f"{book} is not available for borrowing.")
 
--
+    def return_book(self, book, username):
+        if self.borrowed_books.get(book) == username:
+            self.books.append(book)
+            del self.borrowed_books[book]
+            print(f"{book} returned by {username}.")
+        else:
+            print(f"{username} did not borrow {book}.")
+
+    def show_books(self):
+        print(f"\nAvailable books ({len(self.books)}):")
+        for book in self.books:
+            print("-", book)
+
+
+# Class to manage user login system
+class UserSystem:
+    def __init__(self):
+        self.users = {"gangasagar": "1234", "user1": "pass"}
+
+    def login(self, username, password):
+        if self.users.get(username) == password:
+            print(f"Welcome, {username}")
+            return True
+        else:
+            print("Invalid username or password.")
+            return False
+
 
 # === Main Program Starts Here ===
-# Create instances of Library and UserSystem
 library = Library()
 user_system = UserSystem()
 
-# Get user credentials
 username = input("Enter username: ")
 password = input("Enter password: ")
 
-# If login successful, show menu options
 if user_system.login(username, password):
     while True:
-        # Display the menu
-        print("\nMenu:")
+        print("\n =========DISPLAY OF MENU OF LIBRARY :")
         print("1. Add book")
         print("2. Remove book")
         print("3. Search book")
@@ -59,35 +74,7 @@ if user_system.login(username, password):
         print("5. Return book")
         print("6. Show all books")
         print("7. Exit")
+
+        choice = input("Enter choice (1-7): ")
+
         
-     #  get user choice
-        choice=input("enter choice)(1-7):")
-     #  perform operations based on user choice
-        if choice=="1":
-            book=input("enter the book name: ")
-            library.add_book(book)
-        elif choice=="2":
-            book=input("enter book tittle to remove: ")
-        library.remove_book(book)
-elif choice=="3":
-      book=input("enter book tittle to search: ")
-      library.search_book(book)
-                                            
-elif choice=="4":
-  book=input("enter book tittle to return: ")
-  library.borrow_book(book,username)
-    
-elif choice== "5":
-    book=input("enter book tittle to return: ")
-    library.return_book(book,username)
-
-elif choice=="6":
-    library.show_books()
-elif choice=="7":
- print("thank you for using the our librayr management system: ")
-    
-    break
-else:
-     print("invilid choice !plese try again:")
-
-
