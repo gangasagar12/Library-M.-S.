@@ -76,5 +76,30 @@ if user_system.login(username, password):
         print("7. Exit")
 
         choice = input("Enter choice (1-7): ")
+        #  perform operations based on the user choice
+        if choice=='1':
+            book=input("enter the book name: ")
+            library.add_book(book)
+        elif choice=="2":
+            book=input("enter book tittle  for the remove : ")
+            library.remove_book(book)
+        elif choice=="3":
+            book =input("enter book tittle to search: ")
+            library.search_book
+        elif choice=="4":
+            book=input("enter  the book tittle to return:  ")
+            library.borrow_book(book.username)
+
+        elif choice=="5":
+            book=input("enter book tittle to return ")
+            library.return_book(book,username)
+        elif choice=="6":
+            library.show_books()
+        elif choice=="7":
+            print(" thankyou for using the library management system:")
+            break
+        else:
+            print("invilid choice ! please try again: :")
+
 
         
