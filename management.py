@@ -4,8 +4,14 @@ class Library:
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
 
-    def add_book(self, book):
+    def add_book(self,book, title, author, isbn,year):
+        self.title=title
+        self.author=author
+        self.isbn=isbn
+        self.year=year
         self.books.append(book)
+        self.books.append(title)
+        self.books.append(author)
         print(f"{book} added to the library.")
 
     def remove_book(self, book):
@@ -80,6 +86,7 @@ if user_system.login(username, password):
         if choice=='1':
             book=input("enter the book name: ")
             library.add_book(book)
+            # library.add_book(title)
         elif choice=="2":
             book=input("enter book tittle  for the remove : ")
             library.remove_book(book)
