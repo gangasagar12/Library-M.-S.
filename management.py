@@ -31,8 +31,8 @@ class Library:
             print(f"{book} is not found in the library.")
 
     def search_book(self, title):
-     found=[book for book in self.book if title.lower() in book["title"].lower()]
-     if found:
+      found=[book for book in self.book if title.lower() in book["title"].lower()]
+      if found:
         print(f"{title} is available in the library.")
         for book in found: 
             print("-" ,book)
@@ -50,8 +50,20 @@ class Library:
 
     def return_book(self, isbn, username):
         if self.borrowed_books.get(book) == username:
+            #  find book info 
+            # for demo recostrcution book minimally (could be improved)
+            title=input("enter the book title to return : ")
+            author=input(" enter author to return: ")
+            year=input(" enter year to return : ")
+            book={
+                "title": title,
+                "author":author,
+                "isbn": isbn,
+                "year" : year
+            }
+        
             self.books.append(book)
-            del self.borrowed_books[book]
+            del self.borrowed_books[isbn]
             print(f"{book} returned by {username}.")
         else:
             print(f"{username} did not borrow {book}.")
