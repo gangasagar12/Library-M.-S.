@@ -1,41 +1,54 @@
+class User:
+    def __init__(self,username, password,role="user"):
+        self.usernaname=username
+        self.password=password
+        self.role=role
+
 # Class to manage library operations
 class Library:
     def __init__(self):
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
 
-    def add_book(self,book, title, author, isbn,year):
-        self.title=title
-        self.author=author
-        self.isbn=isbn
-        self.year=year
+    def add_book(self,title, author, isbn,year):
+        book = {
+            "tittle": title,
+           "author": author,
+           "isbn":isbn,
+           "year": year 
+        }
         self.books.append(book)
-        self.books.append(title)
-        self.books.append(author)
+        # self.books.append(title)
+        # self.books.append(author)
         print(f"{book} added to the library.")
 
     def remove_book(self, book):
-        if book in self.books:
-            self.books.remove(book)
-            print(f"{book} removed from the library.")
-        else:
+        for book in self.books:
+            if book["isbn"]==isbn:
+                self.books.remove(book)
+                print(f"{book} removed from the library.")
+                return
             print(f"{book} is not found in the library.")
 
     def search_book(self, title):
-        if title in self.books:
-            print(f"{title} is available in the library.")
+     found=[book for book in self.book if title.lower() in book["title"].lower()]
+     if found:
+        print(f"{title} is available in the library.")
+        for book in found: 
+            print("-" ,book)
         else:
             print(f"{title} is not available.")
 
-    def borrow_book(self, book, username):
-        if book in self.books:
-            self.books.remove(book)
+    def borrow_book(self, isbn, username):
+        for  book in self.books:
+            if book["isbn"]==isbn:
+                self.books.remove(book)
             self.borrowed_books[book] = username
             print(f"{book} borrowed by {username}")
         else:
-            print(f"{book} is not available for borrowing.")
+            print(f"{isbn} is not available for borrowing.")
 
-    def return_book(self, book, username):
+    def return_book(self, isbn, username):
         if self.borrowed_books.get(book) == username:
             self.books.append(book)
             del self.borrowed_books[book]
@@ -84,18 +97,20 @@ if user_system.login(username, password):
         choice = input("Enter choice (1-7): ")
         #  perform operations based on the user choice
         if choice=='1':
-            book=input("enter the book name: ")
-            library.add_book(book)
-            # library.add_book(title)
+         title=input(" enter book title : ")
+         author=input(" enter the author")
+         isbn=input(" enter the ISBN:: ")
+         year=input(" enter the year")
+         library.add_book(title,author,isbn,year)
         elif choice=="2":
             book=input("enter book tittle  for the remove : ")
             library.remove_book(book)
         elif choice=="3":
             book =input("enter book tittle to search: ")
-            library.search_book
+            library.search_book(book)
         elif choice=="4":
             book=input("enter  the book tittle to return:  ")
-            library.borrow_book(book.username)
+            library.borrow_book(book, username)
 
         elif choice=="5":
             book=input("enter book tittle to return ")
