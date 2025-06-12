@@ -77,15 +77,22 @@ class Library:
 # Class to manage user login system
 class UserSystem:
     def __init__(self):
-        self.users = {"gangasagar": "1234", "user1": "pass"}
-
-    def login(self, username, password):
-        if self.users.get(username) == password:
-            print(f"Welcome, {username}")
-            return True
-        else:
-            print("Invalid username or password.")
-            return False
+        self.users = {
+            "admin": User("gangasagar" ," 1234"," admin"),
+            "user1":User("user1","pass","user")
+        }
+    def register(self):
+        username=input("choose a username: ")
+        if username in self.users:
+            print(" username already exits.")
+            return None
+        password=input("choose a password: ")
+        role=input(" role( ' admin or ' user, defult is 'user): ")
+        if role not in["admin","user"]:
+            role="user"
+            self.users[username]=user(username, password, role)
+            print(f" user {username} registered sucessfully as { role}.")
+            return self.users[username]
 
 
 # === Main Program Starts Here ===
