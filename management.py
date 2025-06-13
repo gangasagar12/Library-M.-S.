@@ -124,7 +124,40 @@ while True:
                     if user.role!="admin":
                         print(" admin acess required.")
                         continue
-                    tittle=input("enter book  tittle ")
+                    title=input("enter book  tittle ")
                     author=input("enter book tittle")
                     isbn=input(" enter ISBN: ")
+                    year=input(" enter year: ")
                     library.add.book(title,author,isbn,year)
+                elif choice=="2":
+                    if user.role!="admin":
+                        print(" in here admin acess required : ")
+                        continue
+                    isbn=input(" enter isbn of book to remove")
+                    library.remove_book(isbn)
+                elif choice=="3":
+                    title = input("Enter book title to search: ")
+                    library.search_book(title)
+                elif choice == "4":
+                    isbn = input("Enter ISBN of book to borrow: ")
+                    library.borrow_book(isbn, user.username)
+                elif choice == "5":
+                    isbn = input("Enter ISBN of book to return: ")
+                    library.return_book(isbn, user.username)
+                elif choice == "6":
+                    library.show_books()
+                elif choice == "7":
+                    user_system.change_password(user)
+                elif choice == "8":
+                    print("Logging out...")
+                    break
+                else:
+                    print("Invalid choice! Please try again.")
+    elif main_choice == "2":
+        user_system.register()
+    elif main_choice == "3":
+        print("Thank you for using the library management system!")
+        break
+    else:
+        print("Invalid choice! Please try again.")
+
