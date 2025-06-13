@@ -98,49 +98,33 @@ class UserSystem:
 # === Main Program Starts Here ===
 library = Library()
 user_system = UserSystem()
-
-username = input("Enter username: ")
-password = input("Enter password: ")
-
-if user_system.login(username, password):
-    while True:
-        print("\n =========DISPLAY OF MENU OF LIBRARY :")
-        print("1. Add book")
-        print("2. Remove book")
-        print("3. Search book")
-        print("4. Borrow book")
-        print("5. Return book")
-        print("6. Show all books")
-        print("7. Exit")
-
-        choice = input("Enter choice (1-7): ")
+while True:
+    print("\n=========== library  system====")
+    print("1.login")
+    print("2. register")
+    print("3. exit ")
+    main_choice=input("enter choice(1-3): ")
+    if main_choice=="1":
+        user=user_system.login()
+        if user:
+            while True:
+                print("\n =========DISPLAY OF MENU OF LIBRARY :")
+                print("1. Add book(admin book only)")
+                print("2. Remove book(admin only)")
+                print("3. Search book")
+                print("4. Borrow book")
+                print("5. Return book")
+                print("6. Show all books")
+                print("7 change password.")
+                print("logout")
+            
+                choice = input("Enter choice (1-7): ")
         #  perform operations based on the user choice
-        if choice=='1':
-         title=input(" enter book title : ")
-         author=input(" enter the author")
-         isbn=input(" enter the ISBN:: ")
-         year=input(" enter the year")
-         library.add_book(title,author,isbn,year)
-        elif choice=="2":
-            book=input("enter book tittle  for the remove : ")
-            library.remove_book(book)
-        elif choice=="3":
-            book =input("enter book tittle to search: ")
-            library.search_book(book)
-        elif choice=="4":
-            book=input("enter  the book tittle to return:  ")
-            library.borrow_book(book, username)
-
-        elif choice=="5":
-            book=input("enter book tittle to return ")
-            library.return_book(book,username)
-        elif choice=="6":
-            library.show_books()
-        elif choice=="7":
-            print(" thankyou for using the library management system:")
-            break
-        else:
-            print("invilid choice ! please try again: :")
-
-
-        
+                if choice=='1':
+                    if user.role!="admin":
+                        print(" admin acess required.")
+                        continue
+                    tittle=input("enter book  tittle ")
+                    author=input("enter book tittle")
+                    isbn=input(" enter ISBN: ")
+                    library.add.book(title,author,isbn,year)
