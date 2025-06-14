@@ -3,6 +3,8 @@ class User:
         self.usernaname=username
         self.password=password
         self.role=role
+        #  track  the how many books the user haas borrowed
+        self.borrowed_count=0 
 
 # Class to manage library operations
 class Library:
@@ -40,13 +42,26 @@ class Library:
             print(f"{title} is not available.")
 
     def borrow_book(self, isbn, username):
-        for  book in self.books:
+        #   set the maximum number of 
+         max_books_peruser=5
+        #   find the user in the user system
+         user=user_system.users.get(username)
+         if not user:
+             print("user not found.")
+             return 
+         if user.borrowed_count>=max_books_peruser:
+             print(f{username} has reased the limit of maximum number of book to the per user{max_books_peruser} books.)
+             return 
+        
+         for  book in self.books:
             if book["isbn"]==isbn:
                 self.books.remove(book)
             self.borrowed_books[book] = username
+                                        #  increament the user borrrowd book count
+            user.borrowed_count+=1
             print(f"{book} borrowed by {username}")
-        else:
-            print(f"{isbn} is not available for borrowing.")
+            return
+        print(f"{isbn} is not available for borrowing.")
 
     def return_book(self, isbn, username):
         if self.borrowed_books.get(book) == username:
