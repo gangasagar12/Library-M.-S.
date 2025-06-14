@@ -1,4 +1,4 @@
-class User:
+class user:
     def __init__(self,username, password,role="user"):
         self.usernaname=username
         self.password=password
@@ -50,21 +50,25 @@ class Library:
              print("user not found.")
              return 
          if user.borrowed_count>=max_books_peruser:
-             print(f{username} has reased the limit of maximum number of book to the per user{max_books_peruser} books.)
+             print(f"{username} has reased the limit of maximum number of book to the per user{max_books_peruser} books.")
              return 
         
          for  book in self.books:
             if book["isbn"]==isbn:
                 self.books.remove(book)
-            self.borrowed_books[book] = username
+                self.borrowed_books[book] = username
                                         #  increament the user borrrowd book count
-            user.borrowed_count+=1
-            print(f"{book} borrowed by {username}")
-            return
-        print(f"{isbn} is not available for borrowing.")
+                user.borrowed_count+=1
+                print(f"{book} borrowed by {username}")
+                return
+            print(f"{isbn} is not available for borrowing.")
 
     def return_book(self, isbn, username):
         if self.borrowed_books.get(book) == username:
+            user=user_system.users.get(username)
+            if user: 
+                #  decrement the count of books after the book return
+                user.borrowed_count-=1
             #  find book info 
             # for demo recostrcution book minimally (could be improved)
             title=input("enter the book title to return : ")
@@ -87,14 +91,24 @@ class Library:
         print(f"\nAvailable books ({len(self.books)}):")
         for book in self.books:
             print("-", book)
+    def remannig_borrow_limit(self,username):
+        max_book_peruser=5
+        user=user_system.users.get(username)
+        if user:
+            remanining =max_book_peruser-user.borrowed_count
+            print(f" {username} can borrowed {remanining} more books(s).")
+            return remanining
+        print("user not found.")
+        return 0
+
 
 
 # Class to manage user login system
 class UserSystem:
     def __init__(self):
         self.users = {
-            "admin": User("gangasagar" ," 1234"," admin"),
-            "user1":User("user1","pass","user")
+            "admin": user("gangasagar" ," 1234"," admin"),
+            "user1":user("user1","pass","user")
         }
     def register(self):
         username=input("choose a username: ")
@@ -112,7 +126,7 @@ class UserSystem:
 
 # === Main Program Starts Here ===
 library = Library()
-user_system = UserSystem()
+user_system = UserSystem
 while True:
     print("\n=========== library  system====")
     print("1.login")
@@ -120,7 +134,7 @@ while True:
     print("3. exit ")
     main_choice=input("enter choice(1-3): ")
     if main_choice=="1":
-        user=user_system.login()
+        user=UserSystem.login()
         if user:
             while True:
                 print("\n =========DISPLAY OF MENU OF LIBRARY :")
@@ -163,7 +177,9 @@ while True:
                     library.show_books()
                 elif choice == "7":
                     user_system.change_password(user)
-                elif choice == "8":
+                elif choice=="8":
+                    library.remannig_borrow_limit(user.username)
+                elif choice == "9":
                     print("Logging out...")
                     break
                 else:
