@@ -40,7 +40,7 @@ class Library:
             print("-" ,book)
         else:
             print(f"{title} is not available.")
-
+    import datetime
     def borrow_book(self, isbn, username):
         #   set the maximum number of 
          max_books_peruser=5
@@ -110,6 +110,7 @@ class Library:
         print(f"\nAvailable books ({len(self.books)}):")
         for book in self.books:
             print("-", book)
+
     def remannig_borrow_limit(self,username):
         max_book_peruser=5
         user=user_system.users.get(username)
@@ -142,7 +143,6 @@ class UserSystem:
             print(f" user {username} registered sucessfully as { role}.")
             return self.users[username]
         #  for the due dates and times inmport determine function
-import datetime
 
 
 
