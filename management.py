@@ -44,6 +44,8 @@ class Library:
     def borrow_book(self, isbn, username):
         #   set the maximum number of 
          max_books_peruser=5
+         self.borrowed_books={}
+         due_dates=14
         #   find the user in the user system
          user=user_system.users.get(username)
          if not user:
@@ -56,10 +58,15 @@ class Library:
          for  book in self.books:
             if book["isbn"]==isbn:
                 self.books.remove(book)
-                self.borrowed_books[book] = username
+                deu_dates=datetime.date.today()+ datetime.timedelta(days=due_dates)
+                self.borrowed_books[isbn]={
+                    "user": username,
+                    "due_date":due_dates,
+                    "book": book
+                }
                                         #  increament the user borrrowd book count
                 user.borrowed_count+=1
-                print(f"{book} borrowed by {username}")
+                print(f"{book} borrowed by {username} due on {due_dates}")
                 return
             print(f"{isbn} is not available for borrowing.")
 
@@ -71,6 +78,18 @@ class Library:
                 user.borrowed_count-=1
             #  find book info 
             # for demo recostrcution book minimally (could be improved)
+            due_dates=borrow_book["due_date"]
+            today=datetime.date.today()
+            overdue_days=(today-due_dates).days
+            fine=0
+            if overdue_days>0:
+                fine_rate=10
+                fine =overdue_days*fine_rate
+                print(f" book is overdue by {overdue_days} days(s). fine: {fine}")
+                #  add fine attributres to user if not present
+                if not hasattr(user,"fine"):
+                    user.fine=0
+                    user.fine+=fine
             title=input("enter the book title to return : ")
             author=input(" enter author to return: ")
             year=input(" enter year to return : ")
@@ -122,6 +141,9 @@ class UserSystem:
             self.users[username]=user(username, password, role)
             print(f" user {username} registered sucessfully as { role}.")
             return self.users[username]
+        #  for the due dates and times inmport determine function
+import datetime
+
 
 
 # === Main Program Starts Here ===
@@ -192,3 +214,12 @@ while True:
     else:
         print("Invalid choice! Please try again.")
 
+
+#  due dates and fines
+# User Activity Logs
+# Notifications
+# Send notifications (print messages) for important events, such as:
+
+# Book due soon/overdue.
+# Reserved book is now available.
+# . User Password Reset/Change
