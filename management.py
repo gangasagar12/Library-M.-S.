@@ -1,10 +1,12 @@
 class user:
-    def __init__(self,username, password,role="user"):
+    def __init__(self,username, password,role="user",email=None):
         self.usernaname=username
         self.password=password
         self.role=role
         #  track  the how many books the user haas borrowed
         self.borrowed_count=0 
+        self.email=email
+        self.notifications=[]
 class Logger:
     def __init__(self,activity_logs):
         self.activity_logs=[]
@@ -15,12 +17,16 @@ class Logger:
             timestamp=datetime.datetime.now().strftime("%Y-%m -%d %H: %M :%S")
             log_entry=f"[{timestamp}] {username}: {action}"
             self.activity_logs.append(log_entry)
+#  for the set up email sending function
 
+import smtplib
+form email.mine.text import MIMEtext
 # Class to manage library operations
 class Library:
     def __init__(self):
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
+        self.activity_logs=[]
 
     def add_book(self,title, author, isbn,year):
         book = {
@@ -32,6 +38,7 @@ class Library:
         self.books.append(book)
         # self.books.append(title)
         # self.books.append(author)
+        self.activity_logs(username.f"added book: {title}(isbn:{isbn})")
         print(f"{book} added to the library.")
 
     def remove_book(self, book):
@@ -178,7 +185,8 @@ while True:
                 print("4. Borrow book")
                 print("5. Return book")
                 print("6. Show all books")
-                print("7 change password.")
+                print("7.view activity logs.")
+                print("8 change password.")
                 print("logout")
             
                 choice = input("Enter choice (1-7): ")
@@ -209,6 +217,8 @@ while True:
                     library.return_book(isbn, user.username)
                 elif choice == "6":
                     library.show_books()
+                elif choice=="7":
+                    user_system.activity
                 elif choice == "7":
                     user_system.change_password(user)
                 elif choice=="8":
