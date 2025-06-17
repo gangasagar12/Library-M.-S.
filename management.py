@@ -5,6 +5,16 @@ class user:
         self.role=role
         #  track  the how many books the user haas borrowed
         self.borrowed_count=0 
+class Logger:
+    def __init__(self,activity_logs):
+        self.activity_logs=[]
+
+        # to add the method records logs and maake the function for it
+        def log_activity(self,username,action):
+            import datetime
+            timestamp=datetime.datetime.now().strftime("%Y-%m -%d %H: %M :%S")
+            log_entry=f"[{timestamp}] {username}: {action}"
+            self.activity_logs.append(log_entry)
 
 # Class to manage library operations
 class Library:
@@ -110,6 +120,8 @@ class Library:
         print(f"\nAvailable books ({len(self.books)}):")
         for book in self.books:
             print("-", book)
+        for entry in self.activity_logs:
+            print(entry)
 
     def remannig_borrow_limit(self,username):
         max_book_peruser=5
