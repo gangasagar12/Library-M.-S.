@@ -21,6 +21,24 @@ class Logger:
 
 import smtplib
 form email.mine.text import MIMEtext
+form email.mine.multipart import MIMEMultipart
+def  send_email(subject,body,recipient_email):
+    sender_email="gangasagar62@gmail.com"
+    sender_password="gangasagar0239#"
+    message=MIMEMultipart()
+    message["From"]=sender_email
+    message["To"]=recipient_email
+    message["subject"]=subjectA
+    message.attach( MIMETEXT(body,"plain"))
+    # connect to the SMPT server and send the email
+    try:
+        with smtplib.SMTP_SSL("ganga15bca2024@gmail.com",465) as server:
+            server.login(sender_email,sender_password)
+            server.sendmail(sender_email,recipient_email,message.as_string())
+            print("Email sent successfully!")
+    except Exception as e:
+        print(f"error sending email: {e}")
+
 # Class to manage library operations
 class Library:
     def __init__(self):
@@ -139,7 +157,12 @@ class Library:
             return remanining
         print("user not found.")
         return 0
-
+    form email_util import send_email
+    def notify_due_date(user_email,book_title,due_date):
+        subject="library reminder: book due soon"
+        body=f"dear user,\n\n your borrowed book"'{book_title}' is due on {due_date}.\n please retun it on time to avoid fines.\n\n thank you!"
+        send_email(subject, body, user_email)
+        
 
 
 # Class to manage user login system
