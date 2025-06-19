@@ -64,13 +64,17 @@ class Library:
         self.Logger.log_activity(username,f"added book: {title}(isbn:{isbn})")
         print(f"{book} added to the library.")
 
-    def remove_book(self, book):
-        for book in self.books:
-            if book["isbn"]==isbn:
-                self.books.remove(book)
-                print(f"{book} removed from the library.")
-                return
-            print(f"{book} is not found in the library.")
+    def remove_book(self, isbn,username):
+        #  check if the user is admin or not
+        user=user_system.users.get(username)
+        if user and user.role=="admin":
+            for book in self.books:
+                if book["isbn"]==isbn:
+                    self.books.remove(book)
+                    self.Logger.log_activity(username,f"removed book: {book['title']}(isbn:{isbn})")
+                    print(f"{book} removed from the library.")
+                    return
+        print(f"{book} is not found in the library.")
 
     def search_book(self, title):
       found=[book for book in self.book if title.lower() in book["title"].lower()]
@@ -80,17 +84,16 @@ class Library:
             print("-" ,book)
         else:
             print(f"{title} is not available.")
-    import datetime
-    def borrow_book(self, isbn, username):
+    
+    def borrow_book(self, isbn, username,user_system):
         #   set the maximum number of 
          max_books_peruser=5
-         self.borrowed_books={}
-         due_dates=14
-        #   find the user in the user system
+         due_day=14
          user=user_system.users.get(username)
          if not user:
              print("user not found.")
-             return 
+             return
+         #  check if the user has reached the maximum number of books allowed
          if user.borrowed_count>=max_books_peruser:
              print(f"{username} has reased the limit of maximum number of book to the per user{max_books_peruser} books.")
              return 
@@ -98,7 +101,7 @@ class Library:
          for  book in self.books:
             if book["isbn"]==isbn:
                 self.books.remove(book)
-                deu_dates=datetime.date.today()+ datetime.timedelta(days=due_dates)
+                due_dates=datetime.date.today()+ datetime.timedelta(days=due_day)
                 self.borrowed_books[isbn]={
                     "user": username,
                     "due_date":due_dates,
@@ -106,12 +109,16 @@ class Library:
                 }
                                         #  increament the user borrrowd book count
                 user.borrowed_count+=1
-                print(f"{book} borrowed by {username} due on {due_dates}")
+                self.logger.log_activity(username,f"borrowed book: {book['title']} (ISBN: {isbn})")
                 return
-            print(f"{isbn} is not available for borrowing.")
-
-    def return_book(self, isbn, username):
-        if self.borrowed_books.get(book) == username:
+    def return_book(self, isbn, username,user_system):
+        borrow_info=self.borrowed_books.get(isbn)
+        if borrow_info and borrow_info["user"] == username:
+            user=user_system.users.get(username)
+            if user:
+                #  decrement the count of books after the book return
+                user.borrowed_count-=1
+        if self.borrowed_books.get(isbn) == username:
             user=user_system.users.get(username)
             if user: 
                 #  decrement the count of books after the book return
