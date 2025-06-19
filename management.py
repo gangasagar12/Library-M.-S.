@@ -1,3 +1,7 @@
+import datetime
+import smtplib
+form email.mime.text import MIMEtext
+form email.mime.multipart import MIMEMultipart
 class user:
     def __init__(self,username, password,role="user",email=None):
         self.usernaname=username
@@ -7,29 +11,29 @@ class user:
         self.borrowed_count=0 
         self.email=email
         self.notifications=[]
+        #  to track the fine fo the user
+        self.fine=0   
+        #  logger class for activity logs
 class Logger:
-    def __init__(self,activity_logs):
+    def __init__(self):
         self.activity_logs=[]
 
         # to add the method records logs and maake the function for it
         def log_activity(self,username,action):
-            import datetime
+    
             timestamp=datetime.datetime.now().strftime("%Y-%m -%d %H: %M :%S")
             log_entry=f"[{timestamp}] {username}: {action}"
             self.activity_logs.append(log_entry)
 #  for the set up email sending function
 
-import smtplib
-form email.mine.text import MIMEtext
-form email.mine.multipart import MIMEMultipart
 def  send_email(subject,body,recipient_email):
     sender_email="gangasagar62@gmail.com"
     sender_password="gangasagar0239#"
     message=MIMEMultipart()
     message["From"]=sender_email
     message["To"]=recipient_email
-    message["subject"]=subjectA
-    message.attach( MIMETEXT(body,"plain"))
+    message["subject"]=subject
+    message.attach( MIMEText(body,"plain"))
     # connect to the SMPT server and send the email
     try:
         with smtplib.SMTP_SSL("ganga15bca2024@gmail.com",465) as server:
@@ -44,9 +48,10 @@ class Library:
     def __init__(self):
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
-        self.activity_logs=[]
+        self.Logger=Logger()
 
-    def add_book(self,title, author, isbn,year):
+
+    def add_book(self,title, author, isbn,year,username):
         book = {
             "tittle": title,
            "author": author,
@@ -56,7 +61,7 @@ class Library:
         self.books.append(book)
         # self.books.append(title)
         # self.books.append(author)
-        self.activity_logs(username.f"added book: {title}(isbn:{isbn})")
+        self.Logger.log_activity(username,f"added book: {title}(isbn:{isbn})")
         print(f"{book} added to the library.")
 
     def remove_book(self, book):
