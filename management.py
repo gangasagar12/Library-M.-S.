@@ -49,6 +49,7 @@ def  send_email(subject,body,recipient_email):
 
 # Class to manage library operations
 class Library:
+    # from email_util import send_email
     def __init__(self):
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
@@ -192,7 +193,7 @@ class UserSystem:
         username=input("enter username: ")
         password=input(" enter password:")
         user=self.users.get(username)
-        if user and user.passowrd==password:
+        if user and user.password==password:
             print(f" welcome{username}")
             return user
         print("invilid username or password.")
@@ -214,11 +215,14 @@ class UserSystem:
             return self.users[username]
         #  for the due dates and times inmport determine function
 
-
+    def change_password(self,user):
+        new_password=input("enter new password: ")
+        user.password=new_password
+        print(f" password changed sucessfully for {user.username}")
 
 # === Main Program Starts Here ===
 library = Library()
-user_system = UserSystem
+user_system = UserSystem()
 while True:
     print("\n=========== library  system====")
     print("1.login")
