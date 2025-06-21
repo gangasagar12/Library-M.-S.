@@ -1,5 +1,6 @@
 import datetime
-import smtplib
+# import the  SMTP  for sending email
+import smtplib 
 #  used to class create plain text email parts
 from email.mime.text import MIMEText
 # multiparts class used to create email message with multiparts such as text and attachment 
@@ -21,9 +22,10 @@ class Logger:
         self.activity_logs=[]
 
         # to add the method records logs and maake the function for it
-        def log_activity(self,username,action):
+    def log_activity(self,username,action):
     
             timestamp=datetime.datetime.now().strftime("%Y-%m -%d %H: %M :%S")
+      
             log_entry=f"[{timestamp}] {username}: {action}"
             self.activity_logs.append(log_entry)
 #  for the set up email sending function
@@ -55,7 +57,7 @@ class Library:
 
     def add_book(self,title, author, isbn,year,username):
         book = {
-            "tittle": title,
+            "title": title,
            "author": author,
            "isbn":isbn,
            "year": year 
@@ -79,7 +81,7 @@ class Library:
         print(f"{book} is not found in the library.")
 
     def search_book(self, title):
-      found=[book for book in self.book if title.lower() in book["title"].lower()]
+      found=[book for book in self.books if title.lower() in book["title"].lower()]
       if found:
         print(f"{title} is available in the library.")
         for book in found: 
@@ -183,9 +185,21 @@ class Library:
 class UserSystem:
     def __init__(self):
         self.users = {
-            "admin": user("gangasagar" ," 1234"," admin"),
-            "user1":user("user1","pass","user")
+            "admin": User("gangasagar" ," 1234"," admin"),
+            "user1":User("user1","pass","user")
         }
+    def login(self):
+        username=input("enter username: ")
+        password=input(" enter password:")
+        user=self.users.get(username)
+        if user and user.passowrd==password:
+            print(f" welcome{username}")
+            return user
+        print("invilid username or password.")
+        return None
+    
+    
+    
     def register(self):
         username=input("choose a username: ")
         if username in self.users:
@@ -195,7 +209,7 @@ class UserSystem:
         role=input(" role( ' admin or ' user, defult is 'user): ")
         if role not in["admin","user"]:
             role="user"
-            self.users[username]=user(username, password, role)
+            self.users[username]=User(username, password, role)
             print(f" user {username} registered sucessfully as { role}.")
             return self.users[username]
         #  for the due dates and times inmport determine function
@@ -272,13 +286,3 @@ while True:
         break
     else:
         print("Invalid choice! Please try again.")
-
-
-#  due dates and fines
-# User Activity Logs
-# Notifications
-# Send notifications (print messages) for important events, such as:
-
-# Book due soon/overdue.
-# Reserved book is now available.
-# . User Password Reset/Change
