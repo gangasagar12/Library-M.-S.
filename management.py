@@ -1,12 +1,14 @@
 import datetime
 import smtplib
-form email.mime.text import MIMEtext
-form email.mime.multipart import MIMEMultipart
-class user:
-    def __init__(self,username, password,role="user",email=None):
-        self.usernaname=username
-        self.password=password
-        self.role=role
+#  used to class create plain text email parts
+from email.mime.text import MIMEText
+# multiparts class used to create email message with multiparts such as text and attachment 
+from email.mime.multipart import MIMEMultipart
+class User:
+    def __init__(self, username, password, role="user", email=None):
+        self.username = username
+        self.password = password
+        self.role = role
         #  track  the how many books the user haas borrowed
         self.borrowed_count=0 
         self.email=email
@@ -125,7 +127,7 @@ class Library:
                 user.borrowed_count-=1
             #  find book info 
             # for demo recostrcution book minimally (could be improved)
-            due_dates=borrow_book["due_date"]
+            due_dates=borrow_info["due_date"]
             today=datetime.date.today()
             overdue_days=(today-due_dates).days
             fine=0
@@ -169,10 +171,10 @@ class Library:
             return remanining
         print("user not found.")
         return 0
-    form email_util import send_email
+    from email_util import send_email
     def notify_due_date(user_email,book_title,due_date):
         subject="library reminder: book due soon"
-        body=f"dear user,\n\n your borrowed book"'{book_title}' is due on {due_date}.\n please retun it on time to avoid fines.\n\n thank you!"
+        body=f"dear user,\n\n your borrowed book '{book_title}' is due on {due_date}.\n please return it on time to avoid fines.\n\n thank you!"
         send_email(subject, body, user_email)
         
 
