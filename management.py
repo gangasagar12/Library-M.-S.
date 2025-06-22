@@ -174,7 +174,6 @@ class Library:
             return remanining
         print("user not found.")
         return 0
-    from email_util import send_email
     def notify_due_date(user_email,book_title,due_date):
         subject="library reminder: book due soon"
         body=f"dear user,\n\n your borrowed book '{book_title}' is due on {due_date}.\n please return it on time to avoid fines.\n\n thank you!"
@@ -290,3 +289,22 @@ while True:
         break
     else:
         print("Invalid choice! Please try again.")
+# Advanced Borrowing:
+
+# Reservation system for checked-out books
+
+# Renewal functionality
+
+# Automatic fine calculation
+
+# Borrowing history per 
+
+#  password reset by email
+#  user profile editing
+#  view user borrowing history
+#  list of all available books
+#  activity logs for admin
+#  hash and salt password for security
+# View all registered users
+# Manage users (activate/deactivate accounts)
+# View all logs and system statistics
