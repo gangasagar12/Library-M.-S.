@@ -54,6 +54,7 @@ class Library:
         self.books = []  # List to store available books
         self.borrowed_books = {}  # Dictionary to store borrowed books with username
         self.Logger=Logger()
+        self.reservation={}
 
 
     def add_book(self,title, author, isbn,year,username):
@@ -91,6 +92,20 @@ class Library:
             print(f"{title} is not available.")
     
     def borrow_book(self, isbn, username,user_system):
+         if isbn not in self.books or self.books[isbn]['checked out']:
+            #   book is checked out so reverse it
+            if isbn not in self.reservation:
+                self.reservation[isbn]=[]
+                self.reservation[isbn].append(username)
+                print(f"{username} added to reservation list for the book{isbn}")
+            else:
+                print(f" {username} is already in the reservation queue for{isbn} ")
+                return False
+                #  not biorrowed but reversed
+                # otherwise check out the book
+            self.books[isbn]['checkout']=True
+            self.books[isbn]['borrower']=username
+            print
         #   set the maximum number of 
          max_books_peruser=5
          due_day=14
@@ -105,6 +120,7 @@ class Library:
         
          for  book in self.books:
             if book["isbn"]==isbn:
+                
                 self.books.remove(book)
                 due_dates=datetime.date.today()+ datetime.timedelta(days=due_day)
                 self.borrowed_books[isbn]={
@@ -277,7 +293,13 @@ while True:
                     user_system.change_password(user)
                 elif choice=="8":
                     library.remannig_borrow_limit(user.username)
-                elif choice == "9":
+                elif choice=="9":
+                 isbn=input("enter isbn to renuw: ")
+                 library.renew_book(isbn,user.username)
+                elif choice=="11":
+                    isbn=input("enter ISBN to  view reservations: ")
+                    library.show_reservations(isbn)
+                elif choice == "10":
                     print("Logging out...")
                     break
                 else:
