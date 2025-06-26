@@ -234,6 +234,10 @@ class UserSystem:
         new_password=input("enter new password: ")
         user.password=new_password
         print(f" password changed sucessfully for {user.username}")
+    def forgot_password(self,user):
+        username=input("enter the username or email for forgot the password")
+        if username!=user:
+            
 
 # === Main Program Starts Here ===
 library = Library()
@@ -241,8 +245,9 @@ user_system = UserSystem()
 while True:
     print("\n=========== library  system====")
     print("1.login")
-    print("2. register")
-    print("3. exit ")
+    print("2. forgot password")
+    print("3. register")
+    print("4. exit ")
     main_choice=input("enter choice(1-3): ")
     if main_choice=="1":
         user=UserSystem.login()
@@ -304,18 +309,15 @@ while True:
                     break
                 else:
                     print("Invalid choice! Please try again.")
-    elif main_choice == "2":
-        user_system.register()
+    elif main_choice=="2":
+
     elif main_choice == "3":
+        user_system.register()
+    elif main_choice == "4":
         print("Thank you for using the library management system!")
         break
     else:
         print("Invalid choice! Please try again.")
-# Advanced Borrowing:
-
-# Reservation system for checked-out books
-
-# Renewal functionality
 
 # Automatic fine calculation
 
