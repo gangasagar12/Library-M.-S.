@@ -1,6 +1,8 @@
 import datetime
 # import the  SMTP  for sending email
 import smtplib 
+import random
+import string
 #  used to class create plain text email parts
 from email.mime.text import MIMEText
 # multiparts class used to create email message with multiparts such as text and attachment 
@@ -201,9 +203,12 @@ class Library:
 class UserSystem:
     def __init__(self):
         self.users = {
-            "admin": User("gangasagar" ," 1234"," admin"),
-            "user1":User("user1","pass","user")
+            "admin": User("gangasagar" ," 1234"," admin",email="admin@example.com"),
+            "user1":User("user1","pass","user",email="user1@example.com")
+
         }
+        #  email code ,mapping
+        self.reset_codes={}
     def login(self):
         username=input("enter username: ")
         password=input(" enter password:")
@@ -234,10 +239,10 @@ class UserSystem:
         new_password=input("enter new password: ")
         user.password=new_password
         print(f" password changed sucessfully for {user.username}")
-    def forgot_password(self,user):
-        username=input("enter the username or email for forgot the password")
-        if username!=user:
-            
+    def  list_users(self):
+        print("\n Registered users : ")
+        for username, user in self.users.items():
+            print(f" username: {username}, email: {user.email},role{user.role}")
 
 # === Main Program Starts Here ===
 library = Library()
@@ -245,9 +250,9 @@ user_system = UserSystem()
 while True:
     print("\n=========== library  system====")
     print("1.login")
-    print("2. forgot password")
-    print("3. register")
-    print("4. exit ")
+    print("2. register")
+    print("3. exit ")
+    print("4. forgot password")
     main_choice=input("enter choice(1-3): ")
     if main_choice=="1":
         user=UserSystem.login()
@@ -304,26 +309,28 @@ while True:
                 elif choice=="11":
                     isbn=input("enter ISBN to  view reservations: ")
                     library.show_reservations(isbn)
-                elif choice == "10":
+            
+                elif choice == "11":
+                    user_system.list_users()
+                elif choice=="10":
                     print("Logging out...")
                     break
                 else:
                     print("Invalid choice! Please try again.")
-    elif main_choice=="2":
 
-    elif main_choice == "3":
+    elif main_choice == "2":
         user_system.register()
-    elif main_choice == "4":
+    elif main_choice=="4":
+        user_system.forgot_password()
+    elif main_choice == "3":
         print("Thank you for using the library management system!")
         break
     else:
         print("Invalid choice! Please try again.")
 
-# Automatic fine calculation
 
-# Borrowing history per 
 
-#  password reset by email
+
 #  user profile editing
 #  view user borrowing history
 #  list of all available books
