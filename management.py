@@ -207,6 +207,24 @@ class UserSystem:
             "user1":User("user1","pass","user",email="user1@example.com")
 
         }
+    def edit_profile(self,user):
+        print("\n Edit profile: ")
+        print("1. change email")
+        print("2. change password")
+        print("3. cancel")
+        choice=input(" enter your choice: ")
+        if choice=="1":
+            new_email=input("enter new email: ")
+            user.email=new_email
+            print("email updated sucesfully:")
+        elif choice=="2":
+            #  reuse exiting method
+            self.change_password(user)
+        elif choice=="3":
+            print("cancelled profile editing ")
+        else:
+            print(" invilid choice")
+
         #  email code ,mapping
         self.reset_codes={}
     def login(self):
@@ -267,7 +285,8 @@ while True:
                 print("6. Show all books")
                 print("7.view activity logs.")
                 print("8 change password.")
-                print("logout")
+                print("9. edit profile ")
+                print("9.logout")
             
                 choice = input("Enter choice (1-7): ")
         #  perform operations based on the user choice
@@ -312,6 +331,8 @@ while True:
             
                 elif choice == "11":
                     user_system.list_users()
+                elif choice=="9":
+                    user_system.edit_profile(user)
                 elif choice=="10":
                     print("Logging out...")
                     break
