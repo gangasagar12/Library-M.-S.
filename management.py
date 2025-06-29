@@ -17,7 +17,8 @@ class User:
         self.email=email
         self.notifications=[]
         #  to track the fine fo the user
-        self.fine=0   
+        self.fine=0  
+        self.borrowing-history=[]
         #  logger class for activity logs
 class Logger:
     def __init__(self):
@@ -133,6 +134,11 @@ class Library:
                                         #  increament the user borrrowd book count
                 user.borrowed_count+=1
                 self.logger.log_activity(username,f"borrowed book: {book['title']} (ISBN: {isbn})")
+                user.borrowing_history.append({
+                    "action": "borrowed",
+                    "book": book.copy(),
+                    "date": datetime.today()
+                })
                 return
     def return_book(self, isbn, username,user_system):
         borrow_info=self.borrowed_books.get(isbn)
@@ -175,6 +181,11 @@ class Library:
             print(f"{book} returned by {username}.")
         else:
             print(f"{username} did not borrow {book}.")
+            user.borrowing_history.append({
+                "action": "returned",
+                "book": borrow_info["book"].copy(),
+                "date": datetime.data.today()
+            })
 
     def show_books(self):
         print(f"\nAvailable books ({len(self.books)}):")
@@ -237,7 +248,15 @@ class UserSystem:
         print("invilid username or password.")
         return None
     
+    #  for the view hsitory new funcction 
+    def view_borrowing_history(Self,user):
+        print(f"\n borrowing history for { user.username}:")
+        for entry in user.borrowing_history:
+            print(f" {entry['date']}: {entry['action']}{entry['book']['title']}(isbn:{entry['book']['isbn']})")
+            if not user.borrowing.history:
+                print("no history found.")    
     
+    #  for the register
     
     def register(self):
         username=input("choose a username: ")
@@ -287,6 +306,7 @@ while True:
                 print("8 change password.")
                 print("9. edit profile ")
                 print("9.logout")
+                print("13.view borrowing history")
             
                 choice = input("Enter choice (1-7): ")
         #  perform operations based on the user choice
@@ -329,10 +349,12 @@ while True:
                     isbn=input("enter ISBN to  view reservations: ")
                     library.show_reservations(isbn)
             
-                elif choice == "11":
+                elif choice == "12":
                     user_system.list_users()
                 elif choice=="9":
                     user_system.edit_profile(user)
+                elif choice=="13":
+                    user_system.view_borrowing_history(user)
                 elif choice=="10":
                     print("Logging out...")
                     break
