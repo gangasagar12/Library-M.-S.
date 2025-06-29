@@ -352,7 +352,7 @@ while True:
 
 
 
-#  user profile editing
+
 #  view user borrowing history
 #  list of all available books
 #  activity logs for admin
